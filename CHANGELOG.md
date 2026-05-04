@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `Chord::ongoing` to control whether partial activation returns `TriggerState::Ongoing` or `TriggerState::None`.
+- `DeltaScale::real_time()` and `DeltaScale::virtual_time()` constructors.`
 
 ### Removed
 
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Improve action evaluation logging.
+- **Breaking**: `DeltaScale::default()` now uses virtual time instead of real time.
 
 ## [0.24.4] - 2026-04-18
 
