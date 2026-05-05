@@ -25,6 +25,7 @@ fn main() {
     App::new()
         .add_plugins((DefaultPlugins, EnhancedInputPlugin))
         .add_input_context::<Player>()
+        .add_input_context::<SharedControls>()
         .init_resource::<FixedUpdateRan>()
         .add_systems(Startup, setup)
         .add_systems(PreUpdate, (reset_fixed_update_ran, update_gamepads))
@@ -39,6 +40,7 @@ fn main() {
         )
         .add_observer(accumulate_roll)
         .add_observer(accumulate_kick)
+        .add_observer(toggle_pause)
         .run();
 }
 
@@ -98,6 +100,7 @@ fn setup(
         Transform::from_xyz(-80.0, 0.0, 0.0),
     ));
 
+    // Player 2
     let material2 = materials.add(Color::srgb(0.9, 0.1, 0.1));
     commands.spawn(player_bundle(
         Player::Second,
@@ -105,6 +108,30 @@ fn setup(
         ball_mesh,
         material2,
         Transform::from_xyz(80.0, 0.0, 0.0),
+    ));
+
+    commands.spawn((
+        SharedControls,
+        actions!(
+            SharedControls[(
+                Action::<Pause>::new(),
+                Press::new(1.0),
+                bindings![KeyCode::Escape, GamepadButton::Start]
+            )]
+        ),
+    ));
+
+    commands.spawn((
+        PauseText,
+        Node {
+            width: percent(100),
+            height: percent(100),
+            align_items: AlignItems::Center,
+            justify_content: JustifyContent::Center,
+            display: Display::None,
+            ..Default::default()
+        },
+        children![Text::new("Paused")],
     ));
 }
 
@@ -198,7 +225,7 @@ fn player_bundle(
 
 fn accumulate_roll(roll: On<Fire<Roll>>, mut input: Query<&mut AccumulatedInput>) {
     let mut input = input.get_mut(roll.context).unwrap();
-    input.roll = roll.value;
+    input.roll += roll.value;
 }
 
 fn accumulate_kick(kick: On<Fire<Kick>>, mut input: Query<&mut AccumulatedInput>) {
@@ -256,6 +283,20 @@ fn advance_physics(time: Res<Time>, players: Query<(&mut Transform, &mut PlayerP
     }
 }
 
+fn toggle_pause(
+    _on: On<Fire<Pause>>,
+    mut time: ResMut<Time<Virtual>>,
+    mut indicator: Single<&mut Node, With<PauseText>>,
+) {
+    if time.is_paused() {
+        time.unpause();
+        indicator.display = Display::None;
+    } else {
+        time.pause();
+        indicator.display = Display::Flex;
+    }
+}
+
 #[derive(Component)]
 enum Player {
     First,
@@ -284,6 +325,16 @@ struct AccumulatedInput {
     roll: Vec2,
     kick: Option<Vec2>,
 }
+
+#[derive(Component)]
+struct SharedControls;
+
+#[derive(InputAction)]
+#[action_output(bool)]
+struct Pause;
+
+#[derive(Component)]
+struct PauseText;
 
 /// True if FixedPreUpdate was run this frame.
 #[derive(Resource, Deref, DerefMut, Default)]

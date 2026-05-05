@@ -954,6 +954,7 @@ pub(crate) fn init_world<'w, 's>() -> (World, SystemState<(ContextTime<'w>, Acti
     let mut world = World::new();
     world.init_resource::<Time>();
     world.init_resource::<Time<Real>>();
+    world.init_resource::<Time<Virtual>>();
 
     let state = SystemState::<(ContextTime, ActionsQuery)>::new(&mut world);
 
