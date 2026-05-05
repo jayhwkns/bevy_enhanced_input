@@ -14,7 +14,7 @@ use crate::prelude::*;
 pub struct DeltaScale {
     /// The type of time used to scale the input by.
     ///
-    /// By default set to [`TimeKind::Virtual`], unlike other modifiers.
+    /// By default set to [`TimeKind::Auto`], unlike other modifiers.
     pub time_kind: TimeKind,
 }
 
@@ -24,15 +24,15 @@ impl DeltaScale {
         time_kind: TimeKind::Real,
     };
 
-    /// Instance with [`TimeKind::Virtual`].
-    pub const VIRTUAL: Self = Self {
-        time_kind: TimeKind::Virtual,
+    /// Instance with [`TimeKind::Auto`].
+    pub const AUTO: Self = Self {
+        time_kind: TimeKind::Auto,
     };
 }
 
 impl Default for DeltaScale {
     fn default() -> Self {
-        Self::VIRTUAL
+        Self::AUTO
     }
 }
 
