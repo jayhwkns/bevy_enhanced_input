@@ -381,7 +381,10 @@ pub mod prelude {
         },
         context::{
             ActionsQuery, ContextActivity, ContextPriority, GamepadDevice, InputContextAppExt,
-            input_reader::ActionSources,
+            input_reader::{
+                ActionSources,
+                custom::{CustomInput, CustomInputs},
+            },
         },
         modifier::{
             InputModifier, accumulate_by::*, clamp::*, dead_zone::*, delta_scale::*,
@@ -419,6 +422,7 @@ impl Plugin for EnhancedInputPlugin {
             .init_resource::<ConsumedInputs>()
             .init_resource::<PendingBindings>()
             .init_resource::<ActionSources>()
+            .init_resource::<CustomInputs>()
             .init_resource::<ConditionRegistry>()
             .init_resource::<ModifierRegistry>()
             .add_input_condition::<BlockBy>()
