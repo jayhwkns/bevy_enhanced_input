@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.25.0] - 2026-05-16
+
 ### Added
 
 - `Binding::Custom(&'static str)` and the `CustomInputs` resource for feeding external input values into bindings by name.
@@ -622,7 +624,8 @@ This update features a big rewrite into a component-based API. The core concepts
 
 Initial release.
 
-[unreleased]: https://github.com/simgine/bevy_replicon/compare/v0.24.4...HEAD
+[unreleased]: https://github.com/simgine/bevy_replicon/compare/v0.25.0...HEAD
+[0.25.0]: https://github.com/simgine/bevy_replicon/compare/v0.24.4...v0.25.0
 [0.24.4]: https://github.com/simgine/bevy_replicon/compare/v0.24.3...v0.24.4
 [0.24.3]: https://github.com/simgine/bevy_replicon/compare/v0.24.2...v0.24.3
 [0.24.2]: https://github.com/simgine/bevy_replicon/compare/v0.24.1...v0.24.2
