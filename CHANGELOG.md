@@ -15,15 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Chord::ongoing` to control whether partial activation returns `TriggerState::Ongoing` or `TriggerState::None`.
 - `DeltaScale::real_time()` and `DeltaScale::virtual_time()` constructors.`
 
-### Removed
-
-- Public `ActiveInStates::matches` in favor of a private helper used by state synchronization.
-
 ### Changed
 
 - Improve action evaluation logging.
 - `DeltaScale::default()` now uses virtual time instead of real time. This is most likely what you want, since it's equivalent to getting the delta from [the default `Time` resource](https://docs.rs/bevy/latest/bevy/prelude/struct.Time.html). If you want the original behavior, use `DeltaScale::real_time()`.
 - Rename `TimeKind::Virtual` to `TimeKind::Auto` and `ContextTime::virt` to `ContextTime::auto`. The old names remain available as deprecated aliases.
+
+### Removed
+
+- Public `ActiveInStates::matches` in favor of a private helper used by state synchronization.
 
 ## [0.24.4] - 2026-04-18
 
